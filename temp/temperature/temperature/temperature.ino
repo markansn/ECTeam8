@@ -37,10 +37,11 @@ void loop()
  
 }
 
-// to convert analog input to degrees celsius using the Steinhart-Hart equation
+// to convert analog input to degrees celsius using the Steinhart-Hart equation - https://www.ametherm.com/thermistor/ntc-thermistors-steinhart-and-hart-equation
 double getTemperature(void)
 {
-   double temp = 1/(A + (B * log(10000)) + (C * (log(10000) * log(10000) * log(10000))
+  // A, B, C are constants from callibration experiments 
+   double temp = 1/(A + (B * log(10000)) + (C * (log(10000) * log(10000) * log(10000))))
    // Converts Kelvin to Celcius
    return temp - 273.15;
 }
