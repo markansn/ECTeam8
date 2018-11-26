@@ -11,21 +11,31 @@ void setup() {
 
 }
 
+
+
 void loop() {
   // put your main code here, to run repeatedly:
 
     if (Serial.available() > 0) { // If data is available to read,
     val = Serial.read(); // read it and store it in val
 
-    if(val == '1') //if we get a 1
+    if(val != "A") //if we get a 1
     {
-       ledState = !ledState; //flip the ledState
-       digitalWrite(ledPin, ledState); 
+       //recieved array packet
     }
     delay(100);
   } 
     else {
     Serial.println("Hello, world!"); //send back a hello world
     delay(50);
+    }
 
+}
+
+
+void establishContact() {
+  while (Serial.available() <= 0) {
+  Serial.println("A");   // send a capital A
+  delay(300);
+  }
 }
