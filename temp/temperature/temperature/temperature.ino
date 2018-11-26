@@ -7,7 +7,6 @@ void setup()
   Serial.begin(9600);
   pinMode(A0, INPUT);
   pinMode(9, OUTPUT);
-
 }
 
 void loop() 
@@ -40,7 +39,7 @@ void loop()
 // to convert analog input to degrees celsius using the Steinhart-Hart equation - https://www.ametherm.com/thermistor/ntc-thermistors-steinhart-and-hart-equation
 double getTemperature(void)
 {
-  // A, B, C are constants from callibration experiments 
+  // A, B, C are constants from callibration experiments and thermistor has resistance of 10K ohms
    double temp = 1/(A + (B * log(10000)) + (C * (log(10000) * log(10000) * log(10000))))
    // Converts Kelvin to Celcius
    return temp - 273.15;
