@@ -40,7 +40,7 @@ if (val != null) {
     }
   }
   else { //if we've already established contact, keep getting and parsing data
-    println(val);
+    println(val); //<>//
 
     sendData();
 
@@ -55,8 +55,7 @@ if (val != null) {
 void sendData() {
     FloatList values = [];
     if (valuesToSend == true) 
-    {
-      values = getValues();
+    { values = getValues();
       myPort.write(values);        //send a 1
       println(values);
     }
