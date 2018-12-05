@@ -1,3 +1,4 @@
+//Don Charles - Lambert 2018 Mark Anson
 import java.util.Random;
 
 ArrayList<PImage> images = new ArrayList<PImage>();
@@ -125,7 +126,7 @@ void drawPanel(int image, String variable, int x, float desired, float actual){
   
   //dynamic text
   textSize(36);
-  text(desired, x + 25, 230);
+  drawDesiredText(desired, x);
   text(actual, x + 25, 330);
   
   int percError = Math.abs(Math.round(((desired - actual)/desired) * 100));
@@ -141,6 +142,14 @@ void drawPanel(int image, String variable, int x, float desired, float actual){
   image(images.get(7), x + 45, 470);
   //convert fill back to black
   fill(255);
+}
+
+void drawDesiredText(float desired, int x){
+  if(whichFloat != 0){
+   
+  }else{
+    text(desired, x + 25, 230);
+  }
 }
 
 void getValue(String variable){
@@ -176,7 +185,14 @@ void mouseClicked(){
       state = 1;
   }else if(inRange(mouseX, 55, 155) && inRange(mouseY, 25, 55)){
       state = 0;
-  } 
+      whichFloat = 0;
+  }
+  
+  if(state == 1){
+    if(inRange(mouseX, 90, 185) && inRange(mouseY, 205, 230)){
+      whichFloat = 1;
+    }
+  }
    
   if(state == 0 || state == 1){
     if(inRange(mouseX, 100, 188) && inRange(mouseY, 475, 505)){
@@ -189,6 +205,7 @@ void mouseClicked(){
   }else if(state > 1 && state < 5){
     if(inRange(mouseX, 402, 581) && inRange(mouseY, 529, 558)){
       state = 0;
+      whichFloat = 0;
     }
   }
 }
@@ -216,3 +233,4 @@ void drawTag(){
   text("Team 8 GUI (C) 2018", 760, 590);
   fill(255);
 }
+//Don Charles - Lambert 2018 Mark Anson
