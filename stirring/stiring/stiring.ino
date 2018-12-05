@@ -1,5 +1,8 @@
 volatile int interruptPin = 2;
+double duration;
+double duration2;
 double rpm;
+unsigned long time;
 unsigned int sum=0;
 int count=0;
 unsigned long startTime;
@@ -7,64 +10,72 @@ unsigned long currentTime;
 double averageRPM;
 int count2=0;
 double requiredRPM;
-int input; //the PWM input to control the voltage of the motor directly
+int input;
 
 void setup() {
+  // put your setup code here, to run once:
   Serial.begin(9600);
   pinMode(10,OUTPUT);
   pinMode(interruptPin, INPUT);
   attachInterrupt(digitalPinToInterrupt(interruptPin),check,FALLING);
   startTime=millis();
-  input=0;
+  input=60;
 }
 
 void loop() {
-  requiredRPM=0; // User input
-  analogWrite(10,input); //Start the motor
+  requiredRPM=800;
+  analogWrite(10,input);
   currentTime = millis();
-
-  //Measure the number of the times that interruptPin turns from high to low, and calculate rpm 
-  //using that number. This happens every half second
   if(currentTime-startTime==500){
-      detachInterrupt(interruptPin);
+     noInterrupts();
+     //detachInterrupt(interruptPin);
+     if (input >60){
+        input=60;
+        }
+      if(input<30){
+        input=30;
+        }
       rpm=count*60;
-      count=0;
       startTime=millis();
-      attachInterrupt(digitalPinToInterrupt(interruptPin),check,FALLING);
+      //attachInterrupt(digitalPinToInterrupt(interruptPin),check,FALLING);
       count2++;
       sum=sum+rpm;
-
-      //Modify the rpm according to the user input by increase PWM value or decrease PWM value.
       if(rpm<requiredRPM){
         if(abs(rpm-requiredRPM)>=200){
-          input=input+5;
+          input=input+1;
+          //Serial.println("less than 200");
           }else{
+            //Serial.println("less");
             input=input+1;
             }
-        analogWrite(10,input);
+        //Serial.print("input: ");
+       // Serial.println(input);   
     }
       if(rpm>requiredRPM){
         if(abs(rpm-requiredRPM)>=200){
-          input=input-5;
+          Serial.println("more than 200");
+          input=input-1;
           }else{
+            Serial.println("more");
             input=input-1;
             }
-        analogWrite(10,input);
+        Serial.print("input: ");
+        Serial.println(input);
     }
-     }
-
-  //Calculate the mean value of rpm every ten seconds, this is just for checking whether the speed is controlled succesfully
-  if(count2==20){
+    analogWrite(10,input);
+    interrupts();
+   }
+   
+  
+  if(count2==40){
     count2=0;
-    averageRPM=sum/20;  
+    averageRPM=sum/40;  
     sum=0;
     Serial.println(averageRPM);
   }
-     
-  
-
 }
 
 void check(){
-  count++;
+  //count++;
+  Serial.println("test");
 }
