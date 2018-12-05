@@ -1,6 +1,10 @@
-import processing.serial.*; //import the Serial library
+import processing.serial.*; //import the Serial library //<>//
  Serial myPort;  //the Serial port object
  String val;
+ String prevVal;
+ String ph = "0";
+ String spd = "0";
+ String temp = "0";
  Boolean valuesToSend = false;
 // since we're doing serial handshaking, 
 // we need to check if we've heard from the microcontroller
@@ -9,17 +13,19 @@ boolean firstContact = false;
 void setup() {
   size(200, 200); //make our canvas 200 x 200 pixels big
   //  initialize your serial port and set the baud rate to 9600
-  myPort = new Serial(this, Serial.list()[4], 9600);
+  myPort = new Serial(this, Serial.list()[3], 9600);
   myPort.bufferUntil('\n'); 
 }
 
 void draw() {
+  //println("running");
   //we can leave the draw method empty,  
   //because all our programming happens in the serialEvent (see below)
 }
 
 
 void serialEvent( Serial myPort) {
+
 //put the incoming data into a String - 
 //the '\n' is our end delimiter indicating the end of a complete packet
 val = myPort.readStringUntil('\n');
@@ -39,9 +45,22 @@ if (val != null) {
       println("contact");
     }
   }
-  else { //if we've already established contact, keep getting and parsing data
-    println(val); //<>//
-
+  else if(val.equals("t") || val.equals("p") || val.equals("s")) { 
+    println("here");
+    prevVal = val;
+    //TODO convert to float
+  } else {  
+    if(prevVal.equals("t")) {
+      temp = val;
+    } else if(prevVal.equals("p")) {
+      ph = val;
+    } else if(prevVal.equals("s")) {
+      spd = val;
+    }
+    println(temp);
+    println(ph);
+    println(spd);
+    
     sendData();
 
     // when you've parsed the data you have, ask for more:
@@ -53,17 +72,29 @@ if (val != null) {
 
 
 void sendData() {
-    FloatList values = [];
+    //FloatList values = [];
     if (valuesToSend == true) 
-    { values = getValues();
-      myPort.write(values);        //send a 1
-      println(values);
+    { 
+      ////values = getValues();
+      //myPort.write("t");        //send a 1
+      //myPort.write(getdTemp()); 
+      //myPort.write("p"); 
+      //myPort.write(getdPH()); 
+      //myPort.write("s"); 
+      //myPort.write(getdSpd()); 
+      
     }
   
 }
 
 
+String getdPH() {
+  return "10";
+}
 
-void getValues() {
-  return [3,4];
+String getdTemp() {
+  return "10";
+}
+String getdSpd() {
+  return "10";
 }

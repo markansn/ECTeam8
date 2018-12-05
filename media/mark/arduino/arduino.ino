@@ -1,7 +1,7 @@
 char val; // Data received from the serial port
 int ledPin = 13; // Set the pin to digital I/O 13
 boolean ledState = LOW; //to toggle our LED
-
+char prevVal;
 
 void setup() {
   pinMode(ledPin, OUTPUT); // Set pin as OUTPUT
@@ -10,6 +10,14 @@ void setup() {
   establishContact();  // send a byte to establish contact until receiver responds 
 
 }
+
+
+//void getValues() {
+//  double temp = getTemp();
+//  double pH = getpH();
+//  double spd = getSpd();
+//  return [temp,pH,spd];
+//}
 
 
 
@@ -21,16 +29,34 @@ void loop() {
 
     if(val != "A") //if we get a 1
     {
-       //recieved array packet
+//      if(val == "t" || val == "s" || val == "p") {
+//        prevVal = val;
+//      } else if(prevVal == "t") {
+//        ctemp = val; 
+//      } else if(prevVal == "p") {
+//        cph = val; 
+//      } else if(prevVal == "s") {
+//        cspd = val;
+//      }
     }
     delay(100);
   } 
     else {
-    Serial.println("Hello, world!"); //send back a hello world
+    //send back desired values 
+
+//    array test = getValues();
+    Serial.println("t");
+    Serial.println(getTemp()); 
+    Serial.println("p");
+    Serial.println(getpH()); 
+    Serial.println("s");
+    Serial.println(getSpd()); 
     delay(50);
     }
 
 }
+
+
 
 
 void establishContact() {
@@ -38,4 +64,17 @@ void establishContact() {
   Serial.println("A");   // send a capital A
   delay(300);
   }
+}
+
+double getTemp() {
+  return 1.1;
+
+}
+
+double getpH() {
+  return 1.2;
+}
+
+double getSpd() {
+  return 1.3;
 }
