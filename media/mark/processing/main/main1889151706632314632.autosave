@@ -1,7 +1,7 @@
-import processing.serial.*; //import the Serial library //<>// //<>//
+import processing.serial.*; //import the Serial library
  Serial myPort;  //the Serial port object
  String val;
- String prevVal = "n";
+ String prevVal;
  String ph = "0";
  String spd = "0";
  String temp = "0";
@@ -25,21 +25,18 @@ void draw() {
 
 
 void serialEvent( Serial myPort) {
-try {
+
 //put the incoming data into a String - 
 //the '\n' is our end delimiter indicating the end of a complete packet
 val = myPort.readStringUntil('\n');
 //make sure our data isn't empty before continuing
 if (val != null) {
   //trim whitespace and formatting characters (like carriage return)
-  println("THEVAL");
-  println(val);
   val = trim(val);
-  
+  println(val);
 
   //look for our 'A' string to start the handshake
   //if it's there, clear the buffer, and send a request for data
-
   if (firstContact == false) {
     if (val.equals("A")) {
       myPort.clear();
@@ -48,15 +45,11 @@ if (val != null) {
       println("contact");
     }
   }
-  
   else if(val.equals("t") || val.equals("p") || val.equals("s")) { 
-    println("hereintps");
-    print(val);
+    println("here");
     prevVal = val;
     //TODO convert to float
   } else {  
-    println("PREVVAL");
-    println(prevVal);
     if(prevVal.equals("t")) {
       temp = val;
     } else if(prevVal.equals("p")) {
@@ -64,55 +57,48 @@ if (val != null) {
     } else if(prevVal.equals("s")) {
       spd = val;
     }
- 
+    
+    //todo steinhart heart equation 
+    
+    
     println(temp);
     println(ph);
     println(spd);
+    
     sendData();
 
     // when you've parsed the data you have, ask for more:
     myPort.write("A");
     }
   }
-  
-  
-  
-  
-} catch(RuntimeException e) {
-  e.printStackTrace();
 }
-}
-
-
-
 
 
 
 void sendData() {
     //FloatList values = [];
-    //if (valuesToSend == true) 
-    //{ 
+    if (valuesToSend == true) 
+    { 
       ////values = getValues();
-      println("here4");
-      myPort.write("t");        //send a 1
-      myPort.write(getdTemp()); 
-      myPort.write("p"); 
-      myPort.write(getdPH()); 
-      myPort.write("s"); 
-      myPort.write(getdSpd()); 
+      //myPort.write("t");        //send a 1
+      //myPort.write(getdTemp()); 
+      //myPort.write("p"); 
+      //myPort.write(getdPH()); 
+      //myPort.write("s"); 
+      //myPort.write(getdSpd()); 
       
-    //}
+    }
   
 }
 
 
 String getdPH() {
-  return "2";
+  return "10";
 }
 
 String getdTemp() {
-  return "2";
+  return "10";
 }
 String getdSpd() {
-  return "2";
+  return "10";
 }
