@@ -13,7 +13,8 @@ boolean firstContact = false;
 void setup() {
   size(200, 200); //make our canvas 200 x 200 pixels big
   //  initialize your serial port and set the baud rate to 9600
-  myPort = new Serial(this, "COM4", 9600);
+  println(Serial.list());
+  myPort = new Serial(this, Serial.list()[1], 9600);
   myPort.bufferUntil('\n'); 
 }
 
@@ -44,14 +45,14 @@ if (val != null) {
     if (val.equals("A")) {
       myPort.clear();
       firstContact = true;
-      myPort.write("A");
+      myPort.write("A\n");
       println("contact");
     }
   }
   
   else if(val.equals("t") || val.equals("p") || val.equals("s")) { 
     println("hereintps");
-    print(val);
+    println(val);
     prevVal = val;
     //TODO convert to float
   } else {  
@@ -71,7 +72,7 @@ if (val != null) {
     sendData();
 
     // when you've parsed the data you have, ask for more:
-    myPort.write("A");
+    myPort.write("A\n");
     }
   }
   
@@ -94,12 +95,12 @@ void sendData() {
     //{ 
       ////values = getValues();
       println("here4");
-      myPort.write("t");        //send a 1
-      myPort.write(getdTemp()); 
-      myPort.write("p"); 
-      myPort.write(getdPH()); 
-      myPort.write("s"); 
-      myPort.write(getdSpd()); 
+      myPort.write("t\n");        //send a 1
+      myPort.write(getdTemp() + "\n"); 
+      myPort.write("p\n"); 
+      myPort.write(getdPH() + "\n"); 
+      myPort.write("s\n"); 
+      myPort.write(getdSpd() + "\n"); 
       
     //}
   
@@ -107,12 +108,12 @@ void sendData() {
 
 
 String getdPH() {
-  return "2";
+  return "5";
 }
 
 String getdTemp() {
-  return "2";
+  return "4";
 }
 String getdSpd() {
-  return "2";
+  return "3";
 }
