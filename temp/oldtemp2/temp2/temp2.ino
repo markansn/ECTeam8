@@ -19,18 +19,18 @@ void loop()
     //desiredTemp = serial.read();
   //}
   
-  if (desiredTemp < getTemperature(currentTemp))
-  {
+  //if (desiredTemp < getTemperature(currentTemp))
+  //{
     //turn heater on
-    digitalWrite(9, HIGH);       // sets the digital pin 13 on
-    delay(1000);
-  }
-  else if (desiredTemp > getTemperature(currentTemp))
-  {
+    //digitalWrite(9, HIGH);       // sets the digital pin 13 on
+    //delay(1000);
+ // }
+  //else if (desiredTemp > getTemperature(currentTemp))
+  //{
     //turn heater off
-    digitalWrite(9, LOW);       // sets the digital pin 13 on
-    delay(1000);
-  }
+   // digitalWrite(9, LOW);       // sets the digital pin 13 on
+    //delay(1000);
+  //}
 
   //Changes analog to voltage
   float voltage = currentTemp * (5.0 / 1023.0);
@@ -51,5 +51,5 @@ double getTemperature(double thermResistance)
   
   double temp = 1/(-0.001787020645219 + (0.0007834559368536007 * log(thermResistance)) + (-0.000002593703712281802 * (log(thermResistance) * log(thermResistance) * log(thermResistance))));
    // Converts Kelvin to Celcius
-   return temp - 273.15 + 6.132;
+   return temp - 273.15;
 }
