@@ -196,7 +196,7 @@ double getTemperature(double thermResistance)
   int B = 4080;
 
   double kelvinTemp = 1/((1/T0) + ((log(thermResistance/R0))/B));
-  return kelvinTemp - 273.15 - 1.458;
+  return kelvinTemp - 273.15 - 1.458 - 1.64;
 }
 
 
