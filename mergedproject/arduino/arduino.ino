@@ -89,7 +89,7 @@ void loop() {
 //  
   dtemp = temp();
   dph = ph();
-  //dspd = str();
+  dspd = str();
 // 
   ctemp = String(dtemp);
   cph = String(dph);
