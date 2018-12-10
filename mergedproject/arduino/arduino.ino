@@ -76,22 +76,26 @@ void loop() {
 
 
   desiredtemp = cdesiredtemp.toDouble();
-  desiredph = cdesiredph.toDouble();
-  desiredspd = cdesiredspd.toDouble();
-  handleSerial();
-  ph();
+ desiredph = cdesiredph.toDouble();
+ desiredspd = cdesiredspd.toDouble();
+//
+// 
+//  
 
+  //Serial.println(desiredtemp);
+  handleSerial();
   
+
+//  
   dtemp = temp();
   dph = ph();
   dspd = str();
-  
+// 
   ctemp = String(dtemp);
   cph = String(dph);
   cspd = String(dspd);
-  str();
   
-
+  delay(1000);
 
 }
 
@@ -121,7 +125,7 @@ double ph() {
   if(ph < usr_ph - 0.2) {
     digitalWrite(3, HIGH);
 
-    delay(700);
+    //delay(700);
 
     digitalWrite(3, LOW);
   }
@@ -131,7 +135,7 @@ double ph() {
     
     
 
-    delay(700);
+    //delay(700);
 
     digitalWrite(4, LOW);
 
@@ -139,7 +143,7 @@ double ph() {
   }
 
 
-  delay(10000);
+  //delay(10000);
 
   
 
@@ -166,7 +170,7 @@ double temp() {
   
    //digitalWrite(9, LOW);       // sets the digital pin 13 on
    analogWrite(9, 0);
-   delay(1000);
+   //delay(1000);
  }
  else if (desiredtemp > getTemperature(thermResistance))
  {
@@ -174,9 +178,9 @@ double temp() {
  
    //digitalWrite(9, HIGH);       // sets the digital pin 13 on
    analogWrite(9,150);
-   delay(1000);
+   //delay(1000);
  }
-
+ 
  return(getTemperature(thermResistance));
 
 

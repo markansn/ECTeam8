@@ -1,4 +1,4 @@
-//Don Charles - Lambert 2018 Mark Anson
+    //Don Charles - Lambert 2018 Mark Anson
 import java.util.Random;
 
 
@@ -306,7 +306,7 @@ if (val != null) {
     } else if(prevVal.equals("s")) {
       conditions[2] = float(val);
     }
- 
+     println(conditions);
    
     sendData();
 
