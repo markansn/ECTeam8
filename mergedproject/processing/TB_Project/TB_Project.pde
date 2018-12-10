@@ -26,7 +26,7 @@ ArrayList<Float> pastpH = new ArrayList<Float>();
 ArrayList<Float> pastTemp = new ArrayList<Float>();
 ArrayList<Float> pastStir = new ArrayList<Float>();
 long updateTimer[] = {0, 0, 0};
-float desired[] = {5.7, 25, 700};
+float desired[] = {5.7, 25, 1500};
 float conditions[] = {0, 0, 0};
 int state = 0;
 int whichFloat = 0;
@@ -47,9 +47,9 @@ void setup(){
 }
 
 void draw(){
-  //getValue("pH");
-  //getValue("temp");
-  //getValue("stirring");
+  getValue("pH");
+  getValue("temp");
+  getValue("stirring");
   
   if(state == 0){
     drawMain(true);
@@ -96,6 +96,7 @@ void drawMain(boolean auto){
 }
 
 void drawGraph(String variable){
+  println("drawing graph");
   ArrayList<Float> listinuse;
   if(variable.charAt(0) == "p".charAt(0)){
     listinuse = pastpH;
@@ -190,8 +191,8 @@ void getValue(String variable){
   
   if(System.currentTimeMillis() - updateTimer[index] > 400){
     updateTimer[index] = System.currentTimeMillis();
-    Random rand = new Random();
-    conditions[index] = rand.nextFloat() * 10;
+  //  Random rand = new Random();
+  //  conditions[index] = rand.nextFloat() * 10;
     
     if(variable.charAt(0) == "p".charAt(0)){
       pastpH.add(conditions[index]);
