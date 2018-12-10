@@ -15,7 +15,7 @@ import processing.serial.*; //import the Serial library //<>// //<>//
 // we need to check if we've heard from the microcontroller
 boolean firstContact = false;
 
-
+long flashing = 0;
 
 
 
@@ -26,7 +26,7 @@ ArrayList<Float> pastpH = new ArrayList<Float>();
 ArrayList<Float> pastTemp = new ArrayList<Float>();
 ArrayList<Float> pastStir = new ArrayList<Float>();
 long updateTimer[] = {0, 0, 0};
-float desired[] = {5.7, 25, 1500};
+float desired[] = {5, 30, 1500};
 float conditions[] = {0, 0, 0};
 int state = 0;
 int whichFloat = 0;
@@ -52,7 +52,11 @@ void draw(){
   getValue("stirring");
   
   if(state == 0){
+    desired[0] = 5.0;
+    desired[1] = 30;
+    desired[2] = 1500;
     drawMain(true);
+  
   }else if(state == 1){
     drawMain(false);
   }else if(state == 2){
@@ -65,6 +69,16 @@ void draw(){
   
   //team 8 tag
   drawTag();
+}
+
+void keyPressed(){
+  if(state == 1){
+    if(key == "a".charAt(0)){
+      desired[whichFloat - 1] = desired[whichFloat - 1] + 0.1;
+    }else if(key == "s".charAt(0)){
+      desired[whichFloat - 1] = desired[whichFloat - 1] - 0.1;
+    }
+  }
 }
 
 void drawMain(boolean auto){
@@ -172,10 +186,19 @@ void drawPanel(int image, String variable, int x, float desired, float actual){
 }
 
 void drawDesiredText(float desired, int x){
-  if(whichFloat != 0){
-   
-  }else{
+  //50 350 650
+  if(state == 0 || whichFloat == 0){
     text(desired, x + 25, 230);
+  }else{
+    if((x < 100 && whichFloat == 1)|| (x < 400 && x > 100 && whichFloat == 2) ||(x < 700 && x > 400 && whichFloat == 3)){
+      if(System.currentTimeMillis() - flashing < 400){
+        text(desired, x + 25, 230);
+      }else if(System.currentTimeMillis() - flashing > 800){
+        flashing = System.currentTimeMillis();
+      }
+    }else if((x < 100 && whichFloat != 1)|| (x < 400 && x > 100 && whichFloat != 2) ||(x < 700 && x > 400 && whichFloat != 3)){
+      text(desired, x + 25, 230);
+    }
   }
 }
 
@@ -189,7 +212,7 @@ void getValue(String variable){
     index = 2;
   }
   
-  if(System.currentTimeMillis() - updateTimer[index] > 400){
+  if(System.currentTimeMillis() - updateTimer[index] > 100){
     updateTimer[index] = System.currentTimeMillis();
   //  Random rand = new Random();
   //  conditions[index] = rand.nextFloat() * 10;
@@ -206,8 +229,7 @@ void getValue(String variable){
 }
 
 void mouseClicked(){
-  //println(mouseX);
-  //println(mouseY);
+  whichFloat = 0;
   if(inRange(mouseX, 55, 155) && inRange(mouseY, 75, 105)){
       state = 1;
   }else if(inRange(mouseX, 55, 155) && inRange(mouseY, 25, 55)){
@@ -218,6 +240,10 @@ void mouseClicked(){
   if(state == 1){
     if(inRange(mouseX, 90, 185) && inRange(mouseY, 205, 230)){
       whichFloat = 1;
+    }else if(inRange(mouseX, 388, 507) && inRange(mouseY, 205, 230)){
+      whichFloat = 2;
+    }else if(inRange(mouseX, 686, 780) && inRange(mouseY, 205, 230)){
+      whichFloat = 3;
     }
   }
    

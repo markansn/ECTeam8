@@ -125,7 +125,7 @@ double ph() {
   if(ph < usr_ph - 0.2) {
     digitalWrite(3, HIGH);
 
-    //delay(700);
+    delay(700);
 
     digitalWrite(3, LOW);
   }
@@ -135,7 +135,7 @@ double ph() {
     
     
 
-    //delay(700);
+    delay(700);
 
     digitalWrite(4, LOW);
 
